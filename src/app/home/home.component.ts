@@ -1,6 +1,7 @@
 import { NgFor } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { DashboardService } from '../shared/services/dashboard.service';
 
 @Component({
   selector: 'app-home',
@@ -13,25 +14,30 @@ export class HomeComponent {
   readonly APIUrl = 'https://localhost:7078/api/Employee';
   readonly APIUrl_1 = 'https://localhost:7078/api/Policy';
 
-  constructor(private http: HttpClient) {}
+  constructor(private dashboardService: DashboardService) {}
 
   employee: any = [];
   policy: any = [];
 
-  getEmployeeData() {
-    this.http.get(this.APIUrl + '/1').subscribe((data) => {
-      this.employee.push(data);
-    });
-  }
-
-  getPolicyData() {
-    this.http.get(this.APIUrl_1 + '/1').subscribe((data) => {
-      this.policy = data;
-    });
-  }
-
   ngOnInit() {
-    this.getEmployeeData();
-    this.getPolicyData();
+    this.dashboardService.getEmployeeData().subscribe(
+      (data) => {
+        this.employee.push(data);
+        console.log(data);
+      },
+      (error) => {
+        console.error('Error fetching payment methods:', error);
+      }
+    );
+
+    this.dashboardService.getPolicyData().subscribe(
+      (data) => {
+        this.policy = data;
+        console.log(data);
+      },
+      (error) => {
+        console.error('Error fetching payment methods:', error);
+      }
+    );
   }
 }

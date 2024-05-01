@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 import path from 'path';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/login/login.component';
-import { PaymentComponent } from './payment-details/payment-details.component';
+import { PaymentDetailsComponent } from './payment-details/payment-details.component';
 import { HeaderComponent } from './header/header.component';
 
 export const routes: Routes = [
@@ -16,7 +16,7 @@ export const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'payment-deatils',
-    component: PaymentComponent,
+    path: 'payment-details',
+    component: PaymentDetailsComponent,
   },
 ];

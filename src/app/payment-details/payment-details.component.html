@@ -1,75 +1,183 @@
-<div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        
-        <div class="card px-4">
-          <p class="h8 py-3">Payment Details</p>
-          <div class="row gx-3">
-            <div class="col-12">
-              <div class="d-flex flex-column">
-                <p class="text mb-1">Card Owner Name</p>
-                <input class="form-control mb-3" type="text" placeholder="Full Name">
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card px-4">
+        <p class="h8 py-3">Payment Details</p>
+        <form #myForm="ngForm" (ngSubmit)="submit()">
+          <div>
+            <label
+              for="cardOwnerName"
+              class="tw-text-base tw-font-semibold mb-1"
+              >CARD OWNER NAME</label
+            >
+            <input
+              type="text"
+              id="cardOwnerName"
+              name="cardOwnerName"
+              placeholder="Full name"
+              #cardOwnerName="ngModel"
+              [(ngModel)]="form.cardOwnerName"
+              ngModel
+              class="tw-bg-gray-50 tw-mb-4 tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-focus:ring-blue-500 tw-focus:border-blue-500 tw-block tw-w-full tw-p-2.5 tw-dark:bg-gray-700 tw-dark:border-gray-600 tw-dark:placeholder-gray-400 tw-dark:text-white tw-dark:focus:ring-blue-500 tw-dark:focus:border-blue-500"
+              pattern="[A-Z\s]+"
+              title="Please enter uppercase letters only"
+            />
+
+            <div
+              *ngIf="
+                cardOwnerName.invalid &&
+                (cardOwnerName.dirty || cardOwnerName.touched)
+              "
+              class="tw-text-red-500 tw-text-xs tw-mt-1"
+            >
+              <div>All Caps required</div>
+            </div>
+          </div>
+
+          <div>
+            <label for="cardNumber" class="tw-text-base tw-font-semibold mb-1"
+              >CARD NUMBER</label
+            >
+            <input
+              type="text"
+              id="cardNumber"
+              name="cardNumber"
+              placeholder="Card number"
+              #cardNumber="ngModel"
+              [(ngModel)]="form.cardNumber"
+              ngModel
+              class="tw-bg-gray-50 tw-mb-4 tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-focus:ring-blue-500 tw-focus:border-blue-500 tw-block tw-w-full tw-p-2.5 tw-dark:bg-gray-700 tw-dark:border-gray-600 tw-dark:placeholder-gray-400 tw-dark:text-white tw-dark:focus:ring-blue-500 tw-dark:focus:border-blue-500"
+              pattern="[0-9]{16}"
+              title="Please enter 16 digits"
+            />
+
+            <div
+              *ngIf="cardNumber.invalid && cardNumber.dirty"
+              class="tw-text-red-500 tw-text-xs tw-mt-1"
+            >
+              <div>16 Digits required</div>
+            </div>
+          </div>
+
+          <div class="tw-flex tw-justify-center tw-items-center tw-gap-5">
+            <div class="tw-w-1/2">
+              <label
+                for="securityCode"
+                class="tw-text-base tw-font-semibold mb-1"
+                >SECURITY CODE</label
+              >
+              <input
+                type="text"
+                id="securityCode"
+                name="securityCode"
+                placeholder="Security code"
+                #securityCode="ngModel"
+                [(ngModel)]="form.securityCode"
+                ngModel
+                class="tw-bg-gray-50 tw-mb-4 tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-focus:ring-blue-500 tw-focus:border-blue-500 tw-block tw-w-full tw-p-2.5 tw-dark:bg-gray-700 tw-dark:border-gray-600 tw-dark:placeholder-gray-400 tw-dark:text-white tw-dark:focus:ring-blue-500 tw-dark:focus:border-blue-500"
+                pattern="[0-9]{3}"
+                title="Please enter 3 digits"
+              />
+
+              <div
+                *ngIf="securityCode.invalid && securityCode.dirty"
+                class="tw-text-red-500 tw-text-xs tw-mt-1"
+              >
+                <div>Min 3-Digits Security code required</div>
               </div>
             </div>
-            <div class="col-12">
-              <div class="d-flex flex-column">
-                <p class="text mb-1">Card Number</p>
-                <input class="form-control mb-3" type="text" placeholder="16 digit number">
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="d-flex flex-column">
-                <p class="text mb-1">Valid Through</p>
-                <input class="form-control mb-3" type="text" placeholder="MM/YYYY">
-              </div>
-            </div>
-            <div class="col-6">
-              <div class="d-flex flex-column">
-                <p class="text mb-1">Security Code </p>
-                <input class="form-control mb-3 pt-2 " type="password" placeholder="***">
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="btn btn-primary mb-3">
-                <span class="ps-3">SUBMIT</span>
-                <span class="fas fa-arrow-right"></span>
+
+            <div class="tw-w-1/2">
+              <label
+                for="validThrough"
+                class="tw-text-base tw-font-semibold mb-1"
+                >VALID THROUGH</label
+              >
+              <input
+                type="text"
+                id="validThrough"
+                name="validThrough"
+                placeholder="MM/YYYY"
+                #validThrough="ngModel"
+                [(ngModel)]="form.validThrough"
+                ngModel
+                class="tw-bg-gray-50 tw-mb-4 tw-border tw-border-gray-300 tw-text-gray-900 tw-text-sm tw-focus:ring-blue-500 tw-focus:border-blue-500 tw-block tw-w-full tw-p-2.5 tw-dark:bg-gray-700 tw-dark:border-gray-600 tw-dark:placeholder-gray-400 tw-dark:text-white tw-dark:focus:ring-blue-500 tw-dark:focus:border-blue-500"
+                pattern="\d{2}/\d{4}"
+                title="Please enter date in MM/YYYY format"
+              />
+
+              <div
+                *ngIf="validThrough.invalid && validThrough.dirty"
+                class="tw-text-red-500 tw-text-xs tw-mt-1"
+              >
+                <div>Required</div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="col-md-6">
 
-        <table class="w-full">
-          <thead>
-            <tr>
-              <th class="px-4 py-2">Card Owner</th>
-              <th class="px-4 py-2">Card Number</th>
-              <th class="px-4 py-2">Exp.Date</th>
-              <th class="px-4 py-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let card of cards">
-              <td>{{ card.owner }}</td>
-              <td>{{ card.number }}</td>
-              <td>{{ card.expDate }}</td>
-              <td>
-                <a [routerLink]="['/edit', card.id]">
-                    <button class="btn btn-primary">
-                      <img src="edit_icon.png" alt="Edit" width="20" />
-                    </button>
-                  </a>
-                  <a (click)="removeCard(card.id)">
-                    <button class="btn btn-danger">
-                      <img src="remove_icon.png" alt="Remove" width="20" />
-                    </button>
-                  </a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          <button
+            type="button"
+            class="hover:tw-text-blue-500 tw-text-sm hover:tw-underline"
+            (click)="resetForm()"
+          >
+            Reset form
+          </button>
+
+          <button
+            type="submit"
+            [disabled]="myForm.form.invalid"
+            class="md:tw-me-auto sm:tw-mx-auto tw-relative tw-group tw-overflow-hidden tw-mt-5 tw-p-2 tw-font-semibold tw-border-2 tw-block"
+          >
+            <span
+              class="tw-absolute tw-top-0 tw-left-0 tw-flex tw-w-full tw-h-0 tw-mb-0 tw-transition-all tw-duration-200 tw-ease-out tw-transform tw-translate-y-0 tw-bg-gray-200 group-hover:tw-h-full tw-opacity-90"
+            ></span>
+            <span class="tw-relative">
+              <ng-container *ngIf="isEdit"> Update changes </ng-container>
+
+              <ng-container *ngIf="!isEdit"> Add card </ng-container>
+            </span>
+          </button>
+        </form>
       </div>
     </div>
+    <div class="col-md-6">
+      <table class="w-full table">
+        <thead>
+          <tr>
+            <th class="px-4 py-2">Card Owner</th>
+            <th class="px-4 py-2">Card Number</th>
+            <th class="px-4 py-2">Exp.Date</th>
+            <th class="px-4 py-2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let card of cards">
+            <td>{{ card.cardOwnerName }}</td>
+            <td>{{ card.cardNumber }}</td>
+            <td>{{ card.validThrough }}</td>
+            <td>
+              <a [routerLink]="['/edit', card.id]">
+                <button class="btn" (click)="editToggle(card.paymentId)">
+                  <img
+                    src="../../assets/images/edit_icon.png"
+                    alt="Edit"
+                    width="20"
+                  />
+                </button>
+              </a>
+              <a (click)="removeCard(card.id)">
+                <button class="btn">
+                  <img
+                    src="../../assets/images/remove_icon.png"
+                    alt="Remove"
+                    width="20"
+                  />
+                </button>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  
+</div>

@@ -4,27 +4,63 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
-  private isLoggedIn: boolean = false;
   private apiUrl = 'https://localhost:7078/api/Login';
+  isAuthenticated: boolean = false;
 
+  constructor(private router: Router, private http: HttpClient) {}
 
-  constructor(private router: Router,private http:HttpClient) {}
+  login(form: any) {
+    this.http
+      .post<any>(`${this.apiUrl}`, {
+        email: form.email,
+        password: form.password,
+      })
+      .subscribe(
+        (response) => {
+          console.log(response);
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}`, {
-      email: email,
-      password: password,
+          localStorage.setItem('currentUser', JSON.stringify(response));
+          this.isAuthenticated = true;
+
+          alert('Logged in successfully');
+
+          this.router.navigate(['']);
+        },
+        (error) => {
+          console.log('Login failed: ', error.error);
+
+          alert(error.error);
+        }
+      );
+  }
+
+  // getUserId () {
+  //   const currentUser = localStorage.getItem("currentUser");
+
+  //   if (currentUser) {
+  //     let userData = JSON.parse(currentUser);
+
+  //     let usedId = userData.
+  //   }
+  // }
+
+  initAuthStateListener(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      const currentUser = localStorage.getItem('currentUser') !== null;
+
+      if (currentUser) {
+        console.log('User is already signed in');
+
+        this.isAuthenticated = true;
+        resolve();
+      }
     });
   }
   logout(): void {
-    this.isLoggedIn = false;
+    this.isAuthenticated = false;
     this.router.navigate(['/login']);
-  }
-
-  isAuthenticated(): boolean {
-    return this.isLoggedIn;
   }
 }

@@ -14,7 +14,7 @@ export class HeaderComponent {
   constructor(private authService: AuthService) {}
 
   isAuthenticated(): boolean {
-    return this.authService.isAuthenticated();
+    return this.authService.isAuthenticated;
   }
 
   logout(): void {
